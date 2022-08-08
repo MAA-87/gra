@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+
+    <style>
+        html, body{
+  height: 100%;
+  width: 100%;
+}
+
+body{
+ 
+  font: calc(2vh) "Helvetica", sans-serif;
+
+  background: #CBBAED;
+box-shadow:  20px 20px 60px #bebebe,
+             -20px -20px 60px #CBBAED;
+
+             
+     
+}
+.tab{
+    margin: 10px;
+    background-color: #bebebe;
+}
+#calendar{
+    margin-left: 150px;
+    display: grid;
+
+    grid-template-columns: repeat(31,20px);
+    height: 30%;
+width: max-content;
+    background-color: #857b99;
+}
+#day{
+    border: 1px solid #bebebe;
+    padding: 5px;
+    margin: 1px;
+}
+#user{
+    padding: 5px;
+    margin: 1px;
+    text-align: left;
+   border: 1px solid rgb(185, 176, 176);
+}
+<!--
+
+    
+    -->
+    </style>
+
+</head>
+
+
+<body>
+    <div id="app">
+        <div class="tab">
+            <div id="calendar">
+                <div id="day" v-for="(day, index) in days" :style="{ gridColumn: column(index) }" :class="{ today: today(day) }">
+                {{ day.format('D') }}
+                
+                </div>
+                
+                </div>
+                <div id="user" v-for="user in users">
+                    {{ user }}
+                    </div>
+                    </div>
+                    </div>
+</body>
+
+<!--
+    скрипт
+-->
+<script>
+
+
+Vue.createApp({
+
+  data() {
+      return {
+          days: [],
+          users: ['Латынцев','Абрамов','Дёмин','Голованов','Калинкин']
+
+    }
+  },
+
+  methods: {
+    column(index) {
+  if (index === 0) {
+    return this.days[0].day() 
+  }
+},
+
+xaa(){
+    console.log(  this.days[1].day()  )
+},
+today(day) {
+  return moment().isSame(day, 'day')
+}
+},
+  mounted() {
+    // список дней
+
+    let monthDate = moment().startOf('month')
+this.days = [...Array(monthDate.daysInMonth())].map((_, i) => {
+  return monthDate.clone().add(i, 'day')
+})
+  }
+}).mount('#app');
+</script>
+
+
+</html>
